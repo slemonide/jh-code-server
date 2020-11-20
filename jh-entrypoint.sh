@@ -15,5 +15,8 @@ fi
 
 # This isn't set by default.
 export USER="$(whoami)"
-dumb-init fixuid -q "$@"
+dumb-init fixuid -q
+#dumb-init fixuid -q "$@"
 
+python3 -m jhsingle_native_proxy.main -- /usr/bin/code-server --auth none --bind-addr 0.0.0.0:{port} .
+#python3 -m jhsingle_native_proxy.main -- /usr/bin/code-server --auth none --bind-addr 0.0.0.0:8888 .
