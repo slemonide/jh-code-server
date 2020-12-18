@@ -1,22 +1,13 @@
-#ARG BASE_CONTAINER=jupyter/base-notebook
 ARG BASE_CONTAINER=jupyter/datascience-notebook
-
 FROM $BASE_CONTAINER
 
 USER root
-
-RUN python3 -m pip install jhsingle-native-proxy
 
 RUN apt-get update && apt-get install -yq --no-install-recommends \
     curl \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN curl -fsSL https://code-server.dev/install.sh | sh
-
-COPY jh-entrypoint.sh /usr/bin/jh-entrypoint.sh
-RUN sudo chmod a+rx /usr/bin/jh-entrypoint.sh
-COPY change-user.sh /usr/bin/change-user.sh
-RUN sudo chmod a+rx /usr/bin/change-user.sh
 
 # Install other tools
 RUN apt-get update && apt-get install -yq --no-install-recommends \
@@ -35,5 +26,3 @@ RUN jupyter serverextension enable --sys-prefix jupyter_server_proxy
 COPY jupyter_notebook_config.py /etc/jupyter/
 
 USER $NB_UID
-
-#CMD ["/usr/bin/change-user.sh"]
