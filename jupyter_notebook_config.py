@@ -60,7 +60,12 @@ if 'NB_UMASK' in os.environ:
 ## Additional servers running along the notebook
 c.ServerProxy.servers = {
   'code-server': {
-    'command': ['code-server', '--auth', 'none', '--bind-addr', '0.0.0.0:{port}'],    
+    'command': ['code-server', '--auth', 'none',
+                               '--bind-addr', '0.0.0.0:{port}'],
+    'absolute_url': False
+  },
+  'chip-proxy': {
+    'command': ['start_configurable_http_proxy.sh', '--port', '{port}'],
     'absolute_url': False
   }
 }
